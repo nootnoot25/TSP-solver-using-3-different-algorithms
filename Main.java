@@ -24,25 +24,31 @@ public class Main {
         }
 
         // Solve the TSP using simulated annealing
-        List<City> tour = SA.solveTSP(cities, 10000, 0.000001);
+        //List<City> tour = SA.solveTSP(cities, 10000, 0.000001);
 
         // Print the tour
-        System.out.println("Tour (SA): ");
-        for (City city : tour) {
-            System.out.print(city.getId() + " ");
-        }
-        System.out.println();
+        //System.out.println("Tour (SA): ");
+        //for (City city : tour) {
+           // System.out.print(city.getId() + " ");
+        //}
+       //System.out.println();
 
         // Calculate and print the total distance
-        double distance = 0;
-        for (int i = 0; i < tour.size() - 1; i++) {
-            distance += tour.get(i).distanceTo(tour.get(i + 1));
-        }
-        distance += tour.get(tour.size() - 1).distanceTo(tour.get(0));
-        System.out.println("Total distance: " + distance);
+        //double distance = 0;
+        //for (int i = 0; i < tour.size() - 1; i++) {
+           // distance += tour.get(i).distanceTo(tour.get(i + 1));
+       // }
+        //distance += tour.get(tour.size() - 1).distanceTo(tour.get(0));
+        //System.out.println("Total distance: " + distance);
+
+        double sadistance = calculateTourDistance(SA.solveTSP(cities, 10000, 0.000001));
+        System.out.println("SA distance: " + sadistance);
 
         double gadistance = calculateTourDistance(GA.solveTSP(cities));
         System.out.println("GA distance: " + gadistance);
+
+        double tabudistance = calculateTourDistance(Tabu.runTabuSearch(cities));
+        System.out.println("tabu distance: " + tabudistance);
     }
 
 
