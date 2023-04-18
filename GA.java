@@ -2,9 +2,11 @@ import java.util.*;
 
 public class GA {
 
-    private static final int POPULATION_SIZE = 50;
-    private static final int NUM_GENERATIONS = 100;
-    private static final double MUTATION_RATE = 0.01;
+    //ideal 2-opt is > 100000
+    private static final int POPULATION_SIZE = 1000;
+    private static final int NUM_GENERATIONS = 1000;
+    private static final double MUTATION_RATE = 0.001;
+    private static final int NUM_ELITES = 10; // Change this value as desired
 
     public static List<City> solveTSP(Map<Integer, City> cities) {
         // Generate an initial population
@@ -39,7 +41,8 @@ public class GA {
     private static List<List<City>> generateInitialPopulation(Map<Integer, City> cities) {
         List<List<City>> population = new ArrayList<>();
         for (int i = 0; i < POPULATION_SIZE; i++) {
-            population.add(TourGenerator.generateRandomTour(cities));
+            //population.add(TourGenerator.generateRandomTour(cities));
+            population.add(TwoOpt.twoOpt(cities));
         }
         return population;
     }
@@ -65,17 +68,31 @@ public class GA {
     }
 
     // Select parents for the next generation
+    // Select parents for the next generation with elitism
     private static List<List<City>> selectParents(List<List<City>> population, List<Double> fitnessValues) {
         List<List<City>> parents = new ArrayList<>();
+
+        // Sort the population by fitness value in descending order
+        List<List<City>> sortedPopulation = new ArrayList<>(population);
+        sortedPopulation.sort(Comparator.comparingDouble(GA::calculateFitness).reversed());
+
+        // Add the best individuals (elites) to the parents list
+        for (int i = 0; i < NUM_ELITES; i++) {
+            parents.add(sortedPopulation.get(i));
+        }
+
+        // Select the rest of the parents using roulette wheel selection
         double totalFitness = fitnessValues.stream().mapToDouble(Double::doubleValue).sum();
-        for (int i = 0; i < POPULATION_SIZE / 2; i++) {
+        for (int i = 0; i < (POPULATION_SIZE - NUM_ELITES) / 2; i++) {
             List<City> parent1 = selectIndividual(population, fitnessValues, totalFitness);
             List<City> parent2 = selectIndividual(population, fitnessValues, totalFitness);
             parents.add(parent1);
             parents.add(parent2);
         }
+
         return parents;
     }
+
 
     // Select an individual from the population
     private static List<City> selectIndividual(List<List<City>> population, List<Double> fitnessValues, double totalFitness) {

@@ -2,6 +2,7 @@ import java.util.*;
 
 public class SA {
 
+     //ideal 2-opt is <1000
     public static List<City> solveTSP(Map<Integer, City> cities, int initialTemp, double coolingRate) {
 
         // Generate an initial solution

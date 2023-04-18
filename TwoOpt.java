@@ -6,7 +6,7 @@ import java.util.Map;
 public class TwoOpt {
 
     // Define a constant for the number of iterations to perform
-    private static final int ITERATIONS = 1000;
+    private static final int ITERATIONS = 100000;
 
     // Define a method to perform 2-opt on a map of cities
     public static List<City> twoOpt(Map<Integer, City> cities) {
