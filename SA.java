@@ -2,7 +2,6 @@ import java.util.*;
 
 public class SA {
 
-    final private int NUM_ITERATIONS = 1000;
      //ideal 2-opt is <1000
     public static List<City> solveTSP(Map<Integer, City> cities, int initialTemp, double coolingRate) {
 
@@ -22,8 +21,11 @@ public class SA {
         // Set the initial temperature
         double temperature = initialTemp;
 
+        int maxIterations = 100000000;
+        int iterations = 0;
+
         // Iterate until the temperature reaches 1
-        while (temperature > 1) {
+        while (temperature > 1 && iterations < maxIterations) {
             // Generate a new solution by swapping two cities
             List<City> newSolution = new ArrayList<>(currentSolution);
             int index1 = (int) (newSolution.size() * Math.random());
@@ -49,11 +51,14 @@ public class SA {
 
             // Reduce the temperature
             temperature *= 1 - coolingRate;
+
+            iterations++;
         }
 
         System.out.println("------------------SA TOUR---------------------");
         for (City city : bestSolution) {
-            System.out.println(city.getId() + " " + city.getX() + " " + city.getY());
+            System.out.println(city.getX() + "," + city.getY());
+            //System.out.println(city.getId() + "," + city.getX() + "," + city.getY());
         }
         System.out.println("----------------------------------------");
 

@@ -13,59 +13,55 @@ public class Main {
             // Generate a random tour of the cities
             List<City> tour = TourGenerator.generateRandomTour(cities);
 
-            // Improve the tour using 2-opt
-            //<City> improvedTour = TwoOpt.twoOpt(cities);
-
-            // Print the distances of the original tour and the improved tour
             System.out.println("Original tour distance: " + calculateTourDistance(tour));
-            //System.out.println("Improved tour distance (2-opt): " + calculateTourDistance(improvedTour));
+
+            //double average2opt = 0;
+            // Improve the tour using 2-opt
+            //for (int i=0; i<30; i++) {
+            //    List<City> improvedTour = TwoOpt.twoOpt(cities);
+                //System.out.println("Improved tour distance (2-opt): " + calculateTourDistance(improvedTour));
+            //    average2opt = average2opt + calculateTourDistance(improvedTour);
+            //}
+
+            //System.out.println("average 2-opt: " + (average2opt/30));
+
         } catch (IOException e) {
             System.out.println("Error reading file: " + e.getMessage());
         }
 
-        // Solve the TSP using simulated annealing
-        //List<City> tour = SA.solveTSP(cities, 10000, 0.000001);
+        //for (int i = 0; i < 30; i++) {
+           // long startTime = System.currentTimeMillis();
 
-        // Print the tour
-        //System.out.println("Tour (SA): ");
-        //for (City city : tour) {
-           // System.out.print(city.getId() + " ");
+            //double sadistance = calculateTourDistance(SA.solveTSP(cities, 100000, 0.0000001));
+
+            //long endTime = System.currentTimeMillis();
+           // long duration = endTime - startTime;
+
+            //System.out.println("SA: " + sadistance);
+            //System.out.println(duration + " milliseconds");
         //}
-       //System.out.println();
 
-        // Calculate and print the total distance
-        //double distance = 0;
-        //for (int i = 0; i < tour.size() - 1; i++) {
-           // distance += tour.get(i).distanceTo(tour.get(i + 1));
-       // }
-        //distance += tour.get(tour.size() - 1).distanceTo(tour.get(0));
-        //System.out.println("Total distance: " + distance);
+        //for (int i = 0; i < 30; i++) {
+            //long startTime = System.currentTimeMillis();
+
+            //double gadistance = calculateTourDistance(GA.solveTSP(cities));
+            //System.out.println("GA distance: " + gadistance);
+
+            //long endTime = System.currentTimeMillis();
+            //long duration = endTime - startTime;
+            //System.out.println(duration + " milliseconds\n");
+        //}
+
+        for (int i = 0; i < 30; i++) {
         long startTime = System.currentTimeMillis();
 
-        double sadistance = calculateTourDistance(SA.solveTSP(cities, 100000, 0.000001));
-        System.out.println("SA distance: " + sadistance);
+        double tabudistance = calculateTourDistance(Tabu.runTabuSearch(cities, 100));
+        System.out.println("tabu distance: " + tabudistance);
 
         long endTime = System.currentTimeMillis();
         long duration = endTime - startTime;
-        System.out.println("Running time: " + duration + " milliseconds");
-
-        startTime = System.currentTimeMillis();
-
-        double gadistance = calculateTourDistance(GA.solveTSP(cities));
-        System.out.println("GA distance: " + gadistance);
-
-        endTime = System.currentTimeMillis();
-        duration = endTime - startTime;
-        System.out.println("Running time: " + duration + " milliseconds");
-
-        startTime = System.currentTimeMillis();
-
-        double tabudistance = calculateTourDistance(Tabu.runTabuSearch(cities, 15));
-        System.out.println("tabu distance: " + tabudistance);
-
-        endTime = System.currentTimeMillis();
-        duration = endTime - startTime;
-        System.out.println("Running time: " + duration + " milliseconds");
+        System.out.println(duration + " milliseconds");
+        }
     }
 
 

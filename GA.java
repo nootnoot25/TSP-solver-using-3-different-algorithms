@@ -3,10 +3,11 @@ import java.util.*;
 public class GA {
 
     //ideal 2-opt is > 100000
-    private static final int POPULATION_SIZE = 1000;
+    private static final int POPULATION_SIZE = 100;
     private static final int NUM_GENERATIONS = 1000;
-    private static final double MUTATION_RATE = 0.0001;
-    private static final int NUM_ELITES = 10; // Change this value as desired
+    private static final double MUTATION_RATE = 0.00000001;
+
+    private static final int NUM_ELITES = 10;
 
     public static List<City> solveTSP(Map<Integer, City> cities) {
         // Generate an initial population
@@ -36,7 +37,7 @@ public class GA {
         System.out.println("-------------------GA TOUR--------------------");
 
         for (City city : fittestIndividual) {
-            System.out.println(city.getId() + " " + city.getX() + " " + city.getY());
+            System.out.println(city.getX() + "," + city.getY());
         }
         System.out.println("----------------------------------------");
 

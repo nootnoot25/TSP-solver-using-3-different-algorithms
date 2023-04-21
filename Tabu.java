@@ -1,13 +1,11 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Tabu {
 
     private int tabuTenure;
     private static int maxIterations = 10000;
+
+    static int shakeFrequency = 100;
 
     public static List<City> runTabuSearch(Map<Integer, City> cities, int tabuTenure) {
 
@@ -37,9 +35,6 @@ public class Tabu {
                 }
             }
 
-            if (candidateTour == null) {
-                break;
-            }
 
             currentTour = candidateTour;
             currentCost = candidateCost;
@@ -48,6 +43,10 @@ public class Tabu {
                 bestTour = currentTour;
                 bestCost = currentCost;
             }
+            if (i % shakeFrequency == 0) {
+                currentTour = shake(currentTour);
+                currentCost = calculateTourCost(currentTour);
+            }
 
             updateTabuList(tabuList, i, j, k, tabuTenure);
         }
@@ -55,12 +54,24 @@ public class Tabu {
         System.out.println("-------------------TABU TOUR--------------------");
 
         for (City city : bestTour) {
-            System.out.println(city.getId() + " " + city.getX() + " " + city.getY());
+            System.out.println(city.getX() + "," + city.getY());
         }
         System.out.println("----------------------------------------");
 
 
         return bestTour;
+    }
+
+    private static List<City> shake(List<City> tour) {
+        Random rand = new Random();
+        int numSwaps = 3; // number of city swaps to perform
+        List<City> newTour = new ArrayList<>(tour);
+        for (int i = 0; i < numSwaps; i++) {
+            int randIndex1 = rand.nextInt(tour.size());
+            int randIndex2 = rand.nextInt(tour.size());
+            Collections.swap(newTour, randIndex1, randIndex2);
+        }
+        return newTour;
     }
 
     private static List<City> swapCities(List<City> tour, int i, int j) {
@@ -87,16 +98,21 @@ public class Tabu {
     }
 
     private static void updateTabuList(Map<Integer, Integer> tabuList, int currentIteration, int i, int j, int tabuTenure) {
-        for (Integer key : new ArrayList<>(tabuList.keySet())) {
-            Integer value = tabuList.get(key);
-            if (value <= currentIteration) {
-                tabuList.remove(key);
+        List<Integer> keysToRemove = new ArrayList<>();
+        for (Map.Entry<Integer, Integer> entry : tabuList.entrySet()) {
+            if (entry.getValue() <= currentIteration) {
+                keysToRemove.add(entry.getKey());
             }
+        }
+        for (Integer key : keysToRemove) {
+            tabuList.remove(key);
         }
         tabuList.put(getTabuKey(i, j), currentIteration + tabuTenure);
     }
 
+
+
     private static int getTabuKey(int i, int j) {
-        return i * 200 + j;
+        return i * 10 + j;
     }
 }
