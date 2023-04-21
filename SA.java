@@ -2,6 +2,7 @@ import java.util.*;
 
 public class SA {
 
+    final private int NUM_ITERATIONS = 1000;
      //ideal 2-opt is <1000
     public static List<City> solveTSP(Map<Integer, City> cities, int initialTemp, double coolingRate) {
 
@@ -15,7 +16,7 @@ public class SA {
 
         // Initialize the best solution as the 2-opt solution
         List<City> twooptsolution = TwoOpt.twoOpt(cities);
-        System.out.println("Improved tour distance (2-opt): " + Main.calculateTourDistance(twooptsolution));
+        System.out.println("Improved tour distance (2-opt to SA): " + Main.calculateTourDistance(twooptsolution));
         List<City> bestSolution = new ArrayList<>(twooptsolution);
 
         // Set the initial temperature
@@ -49,6 +50,13 @@ public class SA {
             // Reduce the temperature
             temperature *= 1 - coolingRate;
         }
+
+        System.out.println("------------------SA TOUR---------------------");
+        for (City city : bestSolution) {
+            System.out.println(city.getId() + " " + city.getX() + " " + city.getY());
+        }
+        System.out.println("----------------------------------------");
+
 
         // Return the best solution
         return bestSolution;

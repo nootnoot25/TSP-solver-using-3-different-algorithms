@@ -40,15 +40,32 @@ public class Main {
        // }
         //distance += tour.get(tour.size() - 1).distanceTo(tour.get(0));
         //System.out.println("Total distance: " + distance);
+        long startTime = System.currentTimeMillis();
 
-        double sadistance = calculateTourDistance(SA.solveTSP(cities, 10000, 0.000001));
+        double sadistance = calculateTourDistance(SA.solveTSP(cities, 100000, 0.000001));
         System.out.println("SA distance: " + sadistance);
+
+        long endTime = System.currentTimeMillis();
+        long duration = endTime - startTime;
+        System.out.println("Running time: " + duration + " milliseconds");
+
+        startTime = System.currentTimeMillis();
 
         double gadistance = calculateTourDistance(GA.solveTSP(cities));
         System.out.println("GA distance: " + gadistance);
 
-        double tabudistance = calculateTourDistance(Tabu.runTabuSearch(cities));
+        endTime = System.currentTimeMillis();
+        duration = endTime - startTime;
+        System.out.println("Running time: " + duration + " milliseconds");
+
+        startTime = System.currentTimeMillis();
+
+        double tabudistance = calculateTourDistance(Tabu.runTabuSearch(cities, 15));
         System.out.println("tabu distance: " + tabudistance);
+
+        endTime = System.currentTimeMillis();
+        duration = endTime - startTime;
+        System.out.println("Running time: " + duration + " milliseconds");
     }
 
 

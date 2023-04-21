@@ -7,11 +7,13 @@ import java.util.Map;
 public class Tabu {
 
     private int tabuTenure;
-    private static int maxIterations;
+    private static int maxIterations = 10000;
 
-    public static List<City> runTabuSearch(Map<Integer, City> cities) {
+    public static List<City> runTabuSearch(Map<Integer, City> cities, int tabuTenure) {
 
         List<City> bestTour = TwoOpt.twoOpt(cities);
+        System.out.println("Improved tour distance (2-opt to Tabu): " + Main.calculateTourDistance(bestTour));
+
         int bestCost = calculateTourCost(bestTour);
         List<City> currentTour = new ArrayList<>(bestTour);
         int currentCost = bestCost;
@@ -21,12 +23,14 @@ public class Tabu {
             List<City> candidateTour = null;
             int candidateCost = Integer.MAX_VALUE;
 
-            for (int j = 0; j < cities.size(); j++) {
-                for (int k = j + 1; k < cities.size(); k++) {
+            int j;
+            int k = 0;
+            for (j = 0; j < cities.size(); j++) {
+                for (k = j + 1; k < cities.size(); k++) {
                     List<City> newTour = swapCities(currentTour, j, k);
                     int newCost = calculateTourCost(newTour);
 
-                    if (newCost < candidateCost && !isTabu(j, k, tabuList)) {
+                    if (newCost < candidateCost && !isTabu(j, k, tabuList, i)) {
                         candidateTour = newTour;
                         candidateCost = newCost;
                     }
@@ -45,8 +49,16 @@ public class Tabu {
                 bestCost = currentCost;
             }
 
-            updateTabuList(tabuList);
+            updateTabuList(tabuList, i, j, k, tabuTenure);
         }
+
+        System.out.println("-------------------TABU TOUR--------------------");
+
+        for (City city : bestTour) {
+            System.out.println(city.getId() + " " + city.getX() + " " + city.getY());
+        }
+        System.out.println("----------------------------------------");
+
 
         return bestTour;
     }
@@ -66,19 +78,22 @@ public class Tabu {
         return cost;
     }
 
-    private static boolean isTabu(int i, int j, Map<Integer, Integer> tabuList) {
-        return tabuList.containsKey(getTabuKey(i, j));
+    private static boolean isTabu(int i, int j, Map<Integer, Integer> tabuList, int currentIteration) {
+        int tabuKey = getTabuKey(i, j);
+        if (tabuList.containsKey(tabuKey)) {
+            return tabuList.get(tabuKey) >= currentIteration;
+        }
+        return false;
     }
 
-    private static void updateTabuList(Map<Integer, Integer> tabuList) {
+    private static void updateTabuList(Map<Integer, Integer> tabuList, int currentIteration, int i, int j, int tabuTenure) {
         for (Integer key : new ArrayList<>(tabuList.keySet())) {
             Integer value = tabuList.get(key);
-            if (value == 1) {
+            if (value <= currentIteration) {
                 tabuList.remove(key);
-            } else {
-                tabuList.put(key, value - 1);
             }
         }
+        tabuList.put(getTabuKey(i, j), currentIteration + tabuTenure);
     }
 
     private static int getTabuKey(int i, int j) {
