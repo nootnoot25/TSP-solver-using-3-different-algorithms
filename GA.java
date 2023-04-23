@@ -49,12 +49,18 @@ public class GA {
     // Generate an initial population
     private static List<List<City>> generateInitialPopulation(Map<Integer, City> cities) {
         List<List<City>> population = new ArrayList<>();
+        double totalDistance = 0.0;
         for (int i = 0; i < POPULATION_SIZE; i++) {
-            //population.add(TourGenerator.generateRandomTour(cities));
-            population.add(TwoOpt.twoOpt(cities));
+            List<City> tour = TwoOpt.twoOpt(cities);
+            population.add(tour);
+            double tourDistance = Main.calculateTourDistance(tour);
+            totalDistance += tourDistance;
         }
+        double averageDistance = totalDistance / POPULATION_SIZE;
+        System.out.println("Average distance of initial population: " + averageDistance);
         return population;
     }
+
 
     // Evaluate the fitness of each individual in the population
     private static List<Double> evaluateFitness(List<List<City>> population) {

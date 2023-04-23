@@ -30,38 +30,38 @@ public class Main {
         }
 
         //for (int i = 0; i < 30; i++) {
-           // long startTime = System.currentTimeMillis();
+            //long startTime = System.currentTimeMillis();
 
             //double sadistance = calculateTourDistance(SA.solveTSP(cities, 100000, 0.0000001));
 
             //long endTime = System.currentTimeMillis();
-           // long duration = endTime - startTime;
+            //long duration = endTime - startTime;
 
             //System.out.println("SA: " + sadistance);
             //System.out.println(duration + " milliseconds");
         //}
 
-        //for (int i = 0; i < 30; i++) {
-            //long startTime = System.currentTimeMillis();
-
-            //double gadistance = calculateTourDistance(GA.solveTSP(cities));
-            //System.out.println("GA distance: " + gadistance);
-
-            //long endTime = System.currentTimeMillis();
-            //long duration = endTime - startTime;
-            //System.out.println(duration + " milliseconds\n");
-        //}
-
         for (int i = 0; i < 30; i++) {
-        long startTime = System.currentTimeMillis();
+            long startTime = System.currentTimeMillis();
 
-        double tabudistance = calculateTourDistance(Tabu.runTabuSearch(cities, 100));
-        System.out.println("tabu distance: " + tabudistance);
+            double gadistance = calculateTourDistance(GA.solveTSP(cities));
+            System.out.println("GA distance: " + gadistance);
 
-        long endTime = System.currentTimeMillis();
-        long duration = endTime - startTime;
-        System.out.println(duration + " milliseconds");
+            long endTime = System.currentTimeMillis();
+            long duration = endTime - startTime;
+            System.out.println(duration + " milliseconds\n");
         }
+
+        //for (int i = 0; i < 30; i++) {
+        //startTime = System.currentTimeMillis();
+
+        //double tabudistance = calculateTourDistance(Tabu.runTabuSearch(cities, 100));
+        //System.out.println("tabu distance: " + tabudistance);
+
+        //endTime = System.currentTimeMillis();
+        //duration = endTime - startTime;
+        //System.out.println(duration + " milliseconds");
+        //}
     }
 
 

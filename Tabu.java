@@ -5,7 +5,7 @@ public class Tabu {
     private int tabuTenure;
     private static int maxIterations = 10000;
 
-    static int shakeFrequency = 100;
+    static int shakeFrequency = 10;
 
     public static List<City> runTabuSearch(Map<Integer, City> cities, int tabuTenure) {
 
@@ -113,6 +113,6 @@ public class Tabu {
 
 
     private static int getTabuKey(int i, int j) {
-        return i * 10 + j;
+        return i * 100 + j;
     }
 }
