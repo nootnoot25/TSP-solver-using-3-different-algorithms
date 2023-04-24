@@ -10,7 +10,7 @@ public class Tabu {
     public static List<City> runTabuSearch(Map<Integer, City> cities, int tabuTenure) {
 
         List<City> bestTour = TwoOpt.twoOpt(cities);
-        System.out.println("2-opt initial solution: " + Main.calculateTourDistance(bestTour));
+        System.out.println("2-opt initial solution (Tabu): " + Main.calculateTourDistance(bestTour));
 
         int bestCost = calculateTourCost(bestTour);
         List<City> currentTour = new ArrayList<>(bestTour);

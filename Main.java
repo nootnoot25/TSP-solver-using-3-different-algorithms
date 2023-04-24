@@ -38,7 +38,7 @@ public class Main {
             long endTime = System.currentTimeMillis();
             long duration = endTime - startTime;
 
-            System.out.println("Tour after 2-opt + GA: " + sadistance);
+            System.out.println("Tour after 2-opt + SA: " + sadistance);
             System.out.println(duration + " milliseconds");
         //}
 

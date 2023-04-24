@@ -10,7 +10,7 @@ public class SA {
 
         // Initialize the best solution as the 2-opt solution
         List<City> twooptsolution = TwoOpt.twoOpt(cities);
-        System.out.println("2-opt initial solution: " + Main.calculateTourDistance(twooptsolution));
+        System.out.println("2-opt initial solution (SA): " + Main.calculateTourDistance(twooptsolution));
         List<City> bestSolution = new ArrayList<>(twooptsolution);
 
         // Set the initial temperature

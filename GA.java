@@ -57,7 +57,7 @@ public class GA {
             totalDistance += tourDistance;
         }
         double averageDistance = totalDistance / POPULATION_SIZE;
-        System.out.println("Average distance of initial population: " + averageDistance);
+        System.out.println("Average distance of initial population (GA): " + averageDistance);
         return population;
     }
 
