@@ -8,14 +8,9 @@ public class SA {
         // Generate an initial solution
         List<City> currentSolution = TourGenerator.generateRandomTour(cities);
 
-        //use 2-opt solution as initial solution
-        //List<City> currentSolution = TwoOpt.twoOpt(cities);
-        //System.out.println("Improved tour distance (2-opt): " + Main.calculateTourDistance(currentSolution));
-
-
         // Initialize the best solution as the 2-opt solution
         List<City> twooptsolution = TwoOpt.twoOpt(cities);
-        System.out.println("Improved tour distance (2-opt to SA): " + Main.calculateTourDistance(twooptsolution));
+        System.out.println("2-opt initial solution: " + Main.calculateTourDistance(twooptsolution));
         List<City> bestSolution = new ArrayList<>(twooptsolution);
 
         // Set the initial temperature
@@ -55,6 +50,7 @@ public class SA {
             iterations++;
         }
 
+        // Print the SA tour
         System.out.println("------------------SA TOUR---------------------");
         for (City city : bestSolution) {
             System.out.println(city.getX() + "," + city.getY());
@@ -67,7 +63,7 @@ public class SA {
         return bestSolution;
     }
 
-    // Calculate the total distance (energy) of a tour
+    // Calculate the total distance of a tour
     private static double calculateEnergy(List<City> tour) {
         double distance = 0;
         for (int i = 0; i < tour.size() - 1; i++) {

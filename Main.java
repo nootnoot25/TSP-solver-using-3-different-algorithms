@@ -13,8 +13,9 @@ public class Main {
             // Generate a random tour of the cities
             List<City> tour = TourGenerator.generateRandomTour(cities);
 
-            System.out.println("Original tour distance: " + calculateTourDistance(tour));
+            System.out.println("Example random tour distance: " + calculateTourDistance(tour));
 
+            //function for calculating average 2-opt distance
             //double average2opt = 0;
             // Improve the tour using 2-opt
             //for (int i=0; i<30; i++) {
@@ -30,37 +31,37 @@ public class Main {
         }
 
         //for (int i = 0; i < 30; i++) {
-            //long startTime = System.currentTimeMillis();
-
-            //double sadistance = calculateTourDistance(SA.solveTSP(cities, 100000, 0.0000001));
-
-            //long endTime = System.currentTimeMillis();
-            //long duration = endTime - startTime;
-
-            //System.out.println("SA: " + sadistance);
-            //System.out.println(duration + " milliseconds");
-        //}
-
-        for (int i = 0; i < 30; i++) {
             long startTime = System.currentTimeMillis();
 
-            double gadistance = calculateTourDistance(GA.solveTSP(cities));
-            System.out.println("GA distance: " + gadistance);
+            double sadistance = calculateTourDistance(SA.solveTSP(cities, 100000, 0.0000001));
 
             long endTime = System.currentTimeMillis();
             long duration = endTime - startTime;
-            System.out.println(duration + " milliseconds\n");
-        }
+
+            System.out.println("Tour after 2-opt + GA: " + sadistance);
+            System.out.println(duration + " milliseconds");
+        //}
 
         //for (int i = 0; i < 30; i++) {
-        //startTime = System.currentTimeMillis();
+            startTime = System.currentTimeMillis();
 
-        //double tabudistance = calculateTourDistance(Tabu.runTabuSearch(cities, 100));
-        //System.out.println("tabu distance: " + tabudistance);
+            double gadistance = calculateTourDistance(GA.solveTSP(cities));
+            System.out.println("Tour after 2-opt + GA: " + gadistance);
 
-        //endTime = System.currentTimeMillis();
-        //duration = endTime - startTime;
-        //System.out.println(duration + " milliseconds");
+            endTime = System.currentTimeMillis();
+            duration = endTime - startTime;
+            System.out.println(duration + " milliseconds\n");
+        //}
+
+        //for (int i = 0; i < 30; i++) {
+        startTime = System.currentTimeMillis();
+
+            double tabudistance = calculateTourDistance(Tabu.runTabuSearch(cities, 100));
+        System.out.println("Tour after 2-opt + TS: " + tabudistance);
+
+        endTime = System.currentTimeMillis();
+        duration = endTime - startTime;
+        System.out.println(duration + " milliseconds");
         //}
     }
 

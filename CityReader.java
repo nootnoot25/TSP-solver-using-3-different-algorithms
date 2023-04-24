@@ -11,9 +11,9 @@ public class CityReader {
 
         // Use a try-with-resources block to open the file and read its contents
         try (BufferedReader br = new BufferedReader(new FileReader("TSP_107.txt"))) {
-            // Read each line of the file until there are no more lines
+            // Read each line of the file until there are no more lines, EOF is reached
             String line;
-            while ((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null && !line.equals("EOF")) {
                 // Split the line into three parts using a space character as the delimiter
                 String[] parts = line.split(" ");
 
